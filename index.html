@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Simple Weather App</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>🌦️ Simple Weather App</h1>
+
+        <select id="city">
+
+            <option value="10.8505,76.2711">
+                Thrissur
+            </option>
+
+            <option value="9.9312,76.2673">
+                Kochi
+            </option>
+
+            <option value="8.8932,76.6141">
+                Kollam
+            </option>
+
+            <option value="8.5241,76.9366">
+                Thiruvananthapuram
+            </option>
+
+            <option value="11.2588,75.7804">
+                Kozhikode
+            </option>
+            <option value="11.8745,75.3704">Kannur</option>
+    <option value="10.5276,76.2144">
+        Palakkad
+    </option>
+    <option value="11.0510,76.0711">
+        Malappuram
+    </option>
+    <option value="9.4981,76.3388">
+        Alappuzha
+    </option>
+    <option value="9.5916,76.5222">
+        Kottayam
+    </option>
+    <option value="9.9680,76.2990">
+        Ernakulam
+    </option>
+    <option value="10.7867,76.6548">
+        Ottapalam
+    </option>
+    <option value="10.7700,76.6547">
+        Shoranur
+    </option>
+    <option value="10.6085,76.1830">
+        Kunnamkulam
+    </option>
+    <option value="10.3010,76.3370">
+        Chalakudy
+    </option>
+    <option value="10.2250,76.1970">
+        Kodungallur
+    </option>
+    <option value="10.4600,76.0100">
+        Tirur
+    </option>
+    <option value="10.1000,76.3500">
+        Perumbavoor
+    </option>
+    <option value="9.8000,76.4500">
+        Muvattupuzha
+    </option>
+    <option value="9.5900,76.5200">
+        Changanassery
+    </option>
+    <option value="9.4000,76.5700">
+        Pathanamthitta
+    </option>
+    <option value="9.2648,76.7870">
+        Adoor
+    </option>
+    <option value="9.1800,76.4300">
+        Kayamkulam
+    </option>
+    <option value="8.8870,76.5950">
+        Karunagappally
+    </option>
+    <option value="8.7380,76.7160">
+        Attingal
+    </option>
+    <option value="8.6030,76.9850">
+        Neyyattinkara
+    </option>
+
+        </select>
+
+        <button onclick="getWeather()">
+            Get Weather
+        </button>
+
+        <div id="weather">
+
+            <h2>Weather Information</h2>
+
+            <p id="temperature">
+                Temperature: --
+            </p>
+
+            <p id="condition">
+                Condition: --
+            </p>
+
+            <p id="humidity">
+                Humidity: --
+            </p>
+
+            <p id="wind">
+                Wind Speed: --
+            </p>
+
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
