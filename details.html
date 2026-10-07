@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Details</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 30px 20px;
+            background: #eaf6ff;
+        }
+
+        .container {
+            max-width: 650px;
+            margin: auto;
+            padding: 25px;
+            background: white;
+            border-radius: 15px;
+        }
+
+        nav {
+            margin-bottom: 25px;
+        }
+
+        nav a {
+            margin: 0 6px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        select,
+        button {
+            padding: 10px;
+            margin: 8px;
+            font-size: 16px;
+        }
+
+        button {
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .detail {
+            margin: 12px 0;
+            padding: 15px;
+            background: #f2f9ff;
+            border-radius: 10px;
+            font-size: 18px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="forecast.html">Forecast</a>
+            <a href="cities.html">Cities</a>
+            <a href="details.html">Details</a>
+            <a href="about.html">About</a>
+        </nav>
+
+        <h1>🌡️ Weather Details</h1>
+
+        <select id="city">
+
+            <option value="10.8505,76.2711">Thrissur</option>
+            <option value="9.9312,76.2673">Kochi</option>
+            <option value="8.8932,76.6141">Kollam</option>
+            <option value="8.5241,76.9366">Thiruvananthapuram</option>
+            <option value="11.2588,75.7804">Kozhikode</option>
+
+            <option value="11.8745,75.3704">Kannur</option>
+            <option value="10.5276,76.2144">Palakkad</option>
+            <option value="11.0510,76.0711">Malappuram</option>
+            <option value="9.4981,76.3388">Alappuzha</option>
+            <option value="9.5916,76.5222">Kottayam</option>
+            <option value="9.9680,76.2990">Ernakulam</option>
+            <option value="10.7867,76.6548">Ottapalam</option>
+            <option value="10.7700,76.6547">Shoranur</option>
+            <option value="10.6085,76.1830">Kunnamkulam</option>
+            <option value="10.3010,76.3370">Chalakudy</option>
+            <option value="10.2250,76.1970">Kodungallur</option>
+            <option value="10.4600,76.0100">Tirur</option>
+            <option value="10.1000,76.3500">Perumbavoor</option>
+            <option value="9.8000,76.4500">Muvattupuzha</option>
+            <option value="9.5900,76.5200">Changanassery</option>
+            <option value="9.4000,76.5700">Pathanamthitta</option>
+            <option value="9.2648,76.7870">Adoor</option>
+            <option value="9.1800,76.4300">Kayamkulam</option>
+            <option value="8.8870,76.5950">Karunagappally</option>
+            <option value="8.7380,76.7160">Attingal</option>
+            <option value="8.6030,76.9850">Neyyattinkara</option>
+
+        </select>
+
+        <button onclick="getDetails()">Get Details</button>
+
+        <div id="details"></div>
+
+    </div>
+
+    <script>
+
+        async function getDetails() {
+
+            const city = document.getElementById("city").value;
+
+            const [latitude, longitude] = city.split(",");
+
+            const url =
+                "https://api.open-meteo.com/v1/forecast" +
+                "?latitude=" + latitude +
+                "&longitude=" + longitude +
+                "&current=temperature_2m,relative_humidity_2m,wind_speed_10m,wind_direction_10m" +
+                "&daily=sunrise,sunset" +
+                "&forecast_days=1" +
+                "&timezone=auto";
+
+            try {
+
+                const response = await fetch(url);
+
+                const data = await response.json();
+
+                const current = data.current;
+                const daily = data.daily;
+
+                document.getElementById("details").innerHTML = `
+
+                    <div class="detail">
+                        🌡️ Temperature:
+                        ${current.temperature_2m} °C
+                    </div>
+
+                    <div class="detail">
+                        💧 Humidity:
+                        ${current.relative_humidity_2m} %
+                    </div>
+
+                    <div class="detail">
+                        💨 Wind Speed:
+                        ${current.wind_speed_10m} km/h
+                    </div>
+
+                    <div class="detail">
+                        🧭 Wind Direction:
+                        ${current.wind_direction_10m}°
+                    </div>
+
+                    <div class="detail">
+                        🌅 Sunrise:
+                        ${daily.sunrise[0]}
+                    </div>
+
+                    <div class="detail">
+                        🌇 Sunset:
+                        ${daily.sunset[0]}
+                    </div>
+
+                `;
+
+            } catch (error) {
+
+                document.getElementById("details").innerHTML =
+                    "<p>Unable to get weather details.</p>";
+
+                console.log(error);
+            }
+        }
+
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Forecast</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 30px 20px;
+            background: #eaf6ff;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: auto;
+            padding: 25px;
+            background: white;
+            border-radius: 15px;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        select,
+        button {
+            padding: 10px;
+            margin: 8px;
+            font-size: 16px;
+        }
+
+        button {
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .forecast-card {
+            margin-top: 15px;
+            padding: 15px;
+            background: #f2f9ff;
+            border-radius: 10px;
+        }
+
+        nav {
+            margin-bottom: 25px;
+        }
+
+        nav a {
+            margin: 0 8px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="forecast.html">Forecast</a>
+            <a href="cities.html">Cities</a>
+            <a href="about.html">About</a>
+        </nav>
+
+        <h1>🌤️ 5-Day Weather Forecast</h1>
+
+        <select id="city">
+            <option value="10.8505,76.2711">Thrissur</option>
+            <option value="9.9312,76.2673">Kochi</option>
+            <option value="8.8932,76.6141">Kollam</option>
+            <option value="8.5241,76.9366">Thiruvananthapuram</option>
+            <option value="11.2588,75.7804">Kozhikode</option>
+        </select>
+
+        <button onclick="getForecast()">Get Forecast</button>
+
+        <div id="forecast"></div>
+
+    </div>
+
+    <script>
+
+        async function getForecast() {
+
+            const city = document.getElementById("city").value;
+
+            const [latitude, longitude] = city.split(",");
+
+            const url =
+                "https://api.open-meteo.com/v1/forecast" +
+                "?latitude=" + latitude +
+                "&longitude=" + longitude +
+                "&daily=temperature_2m_max,temperature_2m_min,weather_code" +
+                "&forecast_days=5" +
+                "&timezone=auto";
+
+            try {
+
+                const response = await fetch(url);
+
+                const data = await response.json();
+
+                const dates = data.daily.time;
+                const maxTemp = data.daily.temperature_2m_max;
+                const minTemp = data.daily.temperature_2m_min;
+
+                let output = "";
+
+                for (let i = 0; i < dates.length; i++) {
+
+                    output += `
+                        <div class="forecast-card">
+                            <h3>${dates[i]}</h3>
+                            <p>🌡️ Maximum: ${maxTemp[i]} °C</p>
+                            <p>🌡️ Minimum: ${minTemp[i]} °C</p>
+                        </div>
+                    `;
+                }
+
+                document.getElementById("forecast").innerHTML = output;
+
+            } catch (error) {
+
+                document.getElementById("forecast").innerHTML =
+                    "<p>Unable to get forecast data.</p>";
+
+                console.log(error);
+            }
+        }
+
+    </script>
+
+</body>
+
+</html>
